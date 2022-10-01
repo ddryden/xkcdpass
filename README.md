@@ -5,9 +5,9 @@ https://xkcd.com/936/
 Generates password from local dictionary on Mac and Linux
 
 ## Install
-go install github.com/ddryden/xkcdpass@latest
+`go install github.com/ddryden/xkcdpass@latest`
 
-## Usage of ./xkcdpass:
+## Usage of `xkcdpass`:
 *  -dict string
     Path to a custom dictionary (default "/usr/share/dict/words")
 *  -max int
