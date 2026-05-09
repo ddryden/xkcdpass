@@ -29,7 +29,7 @@ func readWords(path string, min int, max int) []string {
 	scanner := bufio.NewScanner(dict)
 	for scanner.Scan() {
 		word := scanner.Text()
-		if len(word) > min && len(word) < max {
+		if len(word) >= min && len(word) <= max {
 			words = append(words, word)
 		}
 	}
