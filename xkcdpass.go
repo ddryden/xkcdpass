@@ -11,6 +11,12 @@ import (
 	"strings"
 )
 
+var (
+    version = "dev"
+    commit  = "none"
+    date    = "unknown"
+)
+
 func randi(max int) int {
 	randomNumber, err := rand.Int(rand.Reader, big.NewInt(int64(max)))
 	if err != nil {
@@ -43,7 +49,13 @@ func main() {
 	wordSeparation := flag.String("ws", " ", "String to separate words")
 	min := flag.Int("min", 5, "minimum word length")
 	max := flag.Int("max", 9, "maximum word length")
+	showVersion := flag.Bool("version", false, "print version information and exit")
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Printf("xkcdpass %s (commit %s, built %s)\n", version, commit, date)
+		return
+	}
 
 	words := readWords(*dictionaryPath, *min, *max)
 	if len(words) < 1000 {
