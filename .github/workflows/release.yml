@@ -31,3 +31,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+
+      - name: Update Homebrew formula
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          TARBALL="https://github.com/ddryden/xkcdpass/archive/refs/tags/v${VERSION}.tar.gz"
+          SHA=$(curl -sL "$TARBALL" | shasum -a 256 | cut -d' ' -f1)
+
+          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/ddryden/homebrew-tap.git" tap
+          cd tap
+          sed -i "s|url \".*\"|url \"${TARBALL}\"|" Formula/xkcdpass.rb
+          sed -i "s|sha256 \".*\"|sha256 \"${SHA}\"|" Formula/xkcdpass.rb
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "xkcdpass ${VERSION}"
+          git push
+
