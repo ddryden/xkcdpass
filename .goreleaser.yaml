@@ -45,3 +45,15 @@ changelog:
 release:
   draft: false
   prerelease: auto
+
+brews:
+  - name: xkcdpass
+    repository:
+      owner: ddryden
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: "https://github.com/ddryden/xkcdpass"
+    description: "XKCD-style passphrase generator"
+    license: "BSD-2-Clause"
+    test: |
+      system "#{bin}/xkcdpass", "-version"
